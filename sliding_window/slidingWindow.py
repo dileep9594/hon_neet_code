@@ -71,11 +71,54 @@ class SlidingWindow :
             l+=1
         return matches == 26
 
-    def minimumWindowSubstring(self):
-        pass
+    def minimumWindowSubstring(self,t:str ,s:str):
+        if t == " " : return ""
 
-    def slidingWindowMaximum(self):
-        pass
+        countT ,window = {},{}
+
+        for c in t :
+            countT[c] = 1+ countT.get(c,0)
+        
+        have ,need  = 0 , len(countT)
+        res ,reslen = [-1,-1] ,float("infinity")
+        l=0
+        for r in range(len(s)):
+            c = s[r]
+            window[c] = 1+ window.get(c,0)
+
+            if c in countT and window[c] == countT[c]:
+                have += 1
+
+            while have == need :
+                if (r-l+1) <reslen :
+                    res = [l,r]
+                    reslen =  (r-l+1)
+                window[s[l]] -=1
+                if s[l] in countT and window[s[l]] < countT[s[l]]:
+                    have -= 1
+                l+=1
+        l ,r =  res
+        return s[l:r+1] if reslen != float("infinity") else ""
+
+
+    def slidingWindowMaximum(self,nums):
+        result =[]
+        q = collections.deque()
+        l =r =0
+        while r < len(nums) :
+            while q and nums[q[-1]] < nums[r] :
+                q.pop()
+            q.append(r)
+
+            if l > q[0] :
+                q.popleft()
+            
+            if (r+1) >= k :
+                result.append(nums[q[0]])
+            r += 1
+        return result
+
+        
 
 
 
