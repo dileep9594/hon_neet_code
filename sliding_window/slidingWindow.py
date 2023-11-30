@@ -1,4 +1,5 @@
 from ast import List
+import collections
 
 
 class SlidingWindow :
@@ -101,7 +102,7 @@ class SlidingWindow :
         return s[l:r+1] if reslen != float("infinity") else ""
 
 
-    def slidingWindowMaximum(self,nums):
+    def slidingWindowMaximum(self,nums,k):
         result =[]
         q = collections.deque()
         l =r =0
@@ -115,6 +116,7 @@ class SlidingWindow :
             
             if (r+1) >= k :
                 result.append(nums[q[0]])
+                l+=1
             r += 1
         return result
 
