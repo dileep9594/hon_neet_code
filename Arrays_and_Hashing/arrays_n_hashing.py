@@ -1,3 +1,6 @@
+from collections import defaultdict
+
+
 def contains_duplicate(nums):
     seen = set()
     for num in nums :
@@ -104,7 +107,17 @@ def LongestConsecutiveSequence(nums):
             longest = max(longest,length)
     return longest
 
+def maxSumwithoutAdjacent(nums,i) :
+    result = 0
+    if i>=len(nums):
+        return 0
+    result = max(nums[i]+maxSumwithoutAdjacent(nums,i+2),maxSumwithoutAdjacent(nums,i+1))
+    return result
+
+
 
 
 if __name__ == "__main__": 
-    print(LongestConsecutiveSequence([100,4,200,1,3,2])))
+    tmp = {"a":1 , "b":2,"c":3,"d":4,"e":5,"f":6}
+    print(tmp.items())
+    # print(maxSumwithoutAdjacent([5,5,10,100],0))

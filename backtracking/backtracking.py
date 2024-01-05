@@ -1,6 +1,7 @@
 class Backtracking:
     def subsets(self, nums):
-        pass
+        result = []
+        
 
     def combinationSum(self, candidates, target):
         pass
@@ -25,3 +26,11 @@ class Backtracking:
 
     def solveNQueens(self, n):
         pass
+
+if  __name__ == '__main __':
+
+    a = [1,24,546,47]
+    print("a")
+    # Bt = Backtracking()
+    # print(Bt.subsets())
+
