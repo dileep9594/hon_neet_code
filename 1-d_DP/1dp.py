@@ -1,21 +1,86 @@
+from ast import List
+
+
 class Dp1D:
-    def climbStairs(self, n):
-        pass
+    def climbStairs(self, n:int) -> int:
+        if n ==0 or n==1 :
+            return 1
+        dp = [0] * (n+1)
+        dp[0] = dp[1] = 1
+        for i in range(2,n+1):
+            dp[i] = dp[i-1] + dp[i-2]
+        return dp[n]
 
-    def minCostClimbingStairs(self, cost):
-        pass
+    def minCostClimbingStairs(self, cost:List[int]) -> int:
+        cost.append(0)
+        for i in range(len(cost)-3,-1,-1) :
+            cost[i] += min(cost[i+1],cost[i+2])
 
-    def houseRobber(self, nums):
-        pass
+        return min(cost[0],cost[1]) 
+        
+
+    def houseRobber(self, nums :List[int]) ->int:
+        n= len(nums)
+        if n<=2 :
+            return max(nums)
+        dp = [0] * n
+        dp[0] = nums[0]
+        dp[1] = max(nums[0],nums[1])
+        for i in range(2,n) :
+            dp[i] = max(dp[i-2]+nums[i],dp[i-1]) #mistake  was doing not leaving adjacent house
+        return dp[-1]
+    
+    def houseRobberSpaceOptimized(self, nums :List[int]) ->int:
+        rob1,rob2 = 0 ,0
+        for n in nums :
+            temp = max(n+rob1,rob2) 
+            rob1 = rob2
+            rob2 = temp
+        return rob2
+    
+
 
     def houseRobberII(self, nums):
+        # same as houseRobber with handling edge cases
         pass
+
 
     def longestPalindromicSubstring(self, s):
-        pass
+        res = "" 
+        resLen =0
+        for i in range(len(s)):
+            #odd length palidrome
+            l,r =i ,i
+            while l>=0 and r< len(s) and s[l] == s[r] :
+                if (r-l+1) > resLen :
+                    res = s[l:r+1]
+                    resLen = r-l+1
+                l-=1
+                r+=1
+            # even length strings are
+            l,r = i,i+1
+            while l>=0 and r<len(s) and s[l] == s[r]:
+                if (r-l+1) >resLen :
+                    res = s[l:r+1]
+                    resLen = r-l+1
+                l-=1
+                r+=1
+        return res
 
-    def palindromicSubstrings(self, s):
-        pass
+    def countPali(self,s,l,r) :
+            res =0 
+            while l>=0 and r < len(s) and s[l] == s[r] :
+                res+=1
+                l-=1
+                r+=1
+            return res
+
+    def countSubstrings(self, s: str) -> int:
+        res =0
+        for i in range(len(s)):
+            res += self.countPali(s,i,i)
+            res += self.countPali(s,i,i+1)
+        return res
 
     def decodeWays(self, s):
         pass
