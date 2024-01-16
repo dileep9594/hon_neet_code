@@ -1,7 +1,7 @@
-from ast import List
-
-
 class Dp1D:
+
+    def __init__(self) :
+        self.name = 'Dp1D'
     def climbStairs(self, n:int) -> int:
         if n ==0 or n==1 :
             return 1
@@ -11,15 +11,13 @@ class Dp1D:
             dp[i] = dp[i-1] + dp[i-2]
         return dp[n]
 
-    def minCostClimbingStairs(self, cost:List[int]) -> int:
-        cost.append(0)
+    def minCostClimbingStairs(self, cost) -> int:
         for i in range(len(cost)-3,-1,-1) :
             cost[i] += min(cost[i+1],cost[i+2])
-
         return min(cost[0],cost[1]) 
         
 
-    def houseRobber(self, nums :List[int]) ->int:
+    def houseRobber(self, nums ) ->int:
         n= len(nums)
         if n<=2 :
             return max(nums)
@@ -30,7 +28,7 @@ class Dp1D:
             dp[i] = max(dp[i-2]+nums[i],dp[i-1]) #mistake  was doing not leaving adjacent house
         return dp[-1]
     
-    def houseRobberSpaceOptimized(self, nums :List[int]) ->int:
+    def houseRobberSpaceOptimized(self, nums) ->int:
         rob1,rob2 = 0 ,0
         for n in nums :
             temp = max(n+rob1,rob2) 
@@ -85,9 +83,16 @@ class Dp1D:
     def decodeWays(self, s):
         pass
 
-    def coinChange(self, coins, amount):
-        pass
-
+    def coinChange(self, coins, amount:int)-> int:
+        dp =[amount+1]*(amount+1)
+        dp[0] =0
+        for a in range(amount+1):
+            for c in coins :
+                if a>=c :
+                    dp[a] = min(dp[a],1+dp[a-c])
+                    
+        return dp[amount] if dp[amount] != amount+1 else -1 
+        
     def maxProductSubarray(self, nums):
         pass
 
@@ -99,7 +104,6 @@ class Dp1D:
 
     def canPartition(self, nums):
         pass
-
 
 class Dp2D:
     def uniquePaths(self, m, n):
@@ -134,3 +138,11 @@ class Dp2D:
 
     def isMatch(self, s, p):
         pass
+
+if __name__=='__main__':
+    edp = Dp1D()
+    coins = [1,2,5]
+    amount = 11
+    minCoin = edp.coinChange(coins,amount)
+    print(minCoin)
+    print(edp.name)
