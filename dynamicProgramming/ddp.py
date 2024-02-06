@@ -92,6 +92,23 @@ class Dp1D:
                     dp[a] = min(dp[a],1+dp[a-c])
                     
         return dp[amount] if dp[amount] != amount+1 else -1 
+    
+    def printcoinChange(self, coins, amount: int) -> int:
+        dp = [amount + 1] * (amount + 1)
+        dp[0] = 0
+        used_coins = [[] for _ in range(amount + 1)]  # List to store used coins for each amount
+
+        for a in range(amount + 1):
+            for c in coins:
+                if a >= c and 1 + dp[a - c] < dp[a]:
+                    dp[a] = 1 + dp[a - c]
+                    used_coins[a] = used_coins[a - c] + [c]
+
+        if dp[amount] == amount + 1:
+            return -1
+        else:
+            print("Coins used:", used_coins[amount])  # Print the coins used
+            return dp[amount]
         
     def maxProductSubarray(self, nums):
         pass
@@ -143,6 +160,7 @@ if __name__=='__main__':
     edp = Dp1D()
     coins = [1,2,5]
     amount = 11
-    minCoin = edp.coinChange(coins,amount)
-    print(minCoin)
+    minCoin = edp.printcoinChange(coins,amount)
+    used_coins = [[] for _ in range(amount + 1)]
+    print(used_coins)
     print(edp.name)
